@@ -25,6 +25,7 @@ class SomWrapper:
                  distance_metric="euclidean", random_seed=None, scaling_factor_plot=6):
         self.som_shape = som_shape
         self.sf = scaling_factor_plot
+        self.distance_metric = distance_metric
         self.som = MiniSom(som_shape[0], som_shape[1],
                            data_dimension,
                            sigma=sigma,
@@ -54,6 +55,7 @@ class SomWrapper:
     def plot_labels(self, labels, path=None):
         plt.figure(figsize=((self.som_shape[1]/self.sf), (self.som_shape[0]/self.sf)))
         ax = plt.axes()
+        plt.title("Plot label, distance: " + self.distance_metric)
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)
 
@@ -65,9 +67,10 @@ class SomWrapper:
         plt.axis([0, self.som.get_weights().shape[1], 0,  self.som.get_weights().shape[0]])
         if path != None:
             plt.savefig(path)
-        plt.show()
+        else:
+            plt.show()
     
-    def plot(self, epsilon, path=None):        
+    def plot_density(self, epsilon=0.01, path=None):        
         scatter_data_x = []
         scatter_data_y = []
         densities = []
@@ -89,8 +92,13 @@ class SomWrapper:
         
         plt.figure(figsize=((self.som_shape[1]/self.sf), (self.som_shape[0]/self.sf)))
         ax = plt.axes()
+        ax.set_title("Plot density, distance: " + self.distance_metric)
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)
         plt.axis([0, self.som.get_weights().shape[1]+1, 0,  self.som.get_weights().shape[0]+1])
         plt.scatter(scatter_data_y, scatter_data_x, c=colors)
-        plt.show()
+        
+        if path != None:
+            plt.savefig(path)
+        else:
+            plt.show()
