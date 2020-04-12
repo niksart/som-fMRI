@@ -21,6 +21,19 @@ import unittest
 
 """
     Minimalistic implementation of the Self Organizing Maps (SOM).
+    
+    ATTRIBUTION NOTES --------------------------------------------------------
+    
+    MiniSom is not my work. MiniSom by Giuseppe Vettigli is licensed under 
+    the Creative Commons Attribution 3.0 Unported License. To view a copy 
+    of this license, visit http://creativecommons.org/licenses/by/3.0/.
+    
+    This work is an adaptation of the original: the Pearson's distance metric
+    was added to the implementation.
+    
+    The original work can be found here: https://github.com/JustGlowing/minisom
+    
+    --------------------------------------------------------------------------
 """
 
 
@@ -340,9 +353,8 @@ class MiniSom(object):
         for t, iteration in enumerate(iterations):
             self.update(data[iteration], self.winner(data[iteration]),
                         t, num_iteration)
-        if verbose:
-            print('\n quantization error:', self.quantization_error(data))
-            print(' topographic error:', self.topographic_error(data))
+        #return {"quantization error": self.quantization_error(data),
+        #        "topographic error": self.topographic_error(data)}
 
     def train_random(self, data, num_iteration, verbose=False):
         """Trains the SOM picking samples at random from data.
